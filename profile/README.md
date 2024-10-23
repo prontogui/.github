@@ -266,7 +266,7 @@ someCmd := pg.CommandWith{
 }.Make()
 ```
 
-This method of construction specifies the initial field values for a new primitive and "makes" (creates) the primitive.  The ```Make()``` method operates on the struct literal and returns a reference to an internal object representing the primitive.  The internal object provides field accessors, such as ```Label() string``` & ```SetLabel(string content) Command``` to read and write fields.
+This method of construction specifies the initial field values for a new primitive and "makes" (creates) the primitive.  The ```Make()``` method operates on the struct literal and returns a pointer to an internal object representing the primitive.  The internal object provides field accessors, such as ```Label() string``` & ```SetLabel(string content) *Command``` to read and write fields.
 
 An alternative approach is use New{Primitive} functions with inline field settings.  For example:
 ```Go
@@ -459,7 +459,7 @@ Run the program again.  You will see the checkbox for selecting bold text.
 The basic structure for writing a GUI is:
 
 1.  Initialize ProntoGUI and start the server
-1.  Build the GUI using primitives, while keeping references to primitives you want to modify throughout operation of the GUI.
+1.  Build the GUI using primitives, while keeping pointers to primitives you want to modify throughout operation of the GUI.
 1.  Construct a loop that waits for interactions in the GUI, updates the state of primitives based on new input, then goes back to waiting.
 
 GUIs are built using primitive objects, which work just like data structures.  These objects are created using a technique using struct literals, followed by a ```Make()``` function call, to initialize optional fields ahead of time.  Once created, these primitive objects have fields that you modify in your program to respond to user interactions and to reflect new state.  
