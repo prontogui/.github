@@ -82,9 +82,15 @@ Clicking the button opens a native dialog window for choosing where to save the 
 <img src="export.png" height="200">
 
 ### Frame
-A frame represents a complete user interface to show on the screen.  It could be the main user interface or a sub-screen in the app.
+A frame represents a complete user interface to show on the screen.  It could be the main user interface or a sub-screen in the app
+
+#### *Example - Simple*
 
 <img src="frame.png" height="300">
+
+#### *Example - Snackbar*
+
+<img src="snackbar.png" height="300">
 
 ### Group
 A group is a related set of primitives, such as a group of commands, that is static in type and quantity.  If a dynamic number of primitives is desired, then consider using a List primitive instead. 
