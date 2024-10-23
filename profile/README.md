@@ -197,7 +197,7 @@ module tutorial/hello
 
 go 1.22.1
 
-require github.com/prontogui/golib v0.0.38
+require github.com/prontogui/golib v0.0.53
 ```
 
 #### STEP 2 - Hello World, Version 0
@@ -228,7 +228,7 @@ func main() {
 
 	helloText := pg.TextWith{
 		Content:    "Hello, world!",
-		Embodiment: "{\"fontFamily\":\"Roboto\", \"fontSize\":\"20.0\"}",
+		Embodiment: "fontFamily:Roboto, fontSize:20.0",
 	}.Make()
 
 	pgui.SetGUI(helloText)
@@ -257,7 +257,21 @@ somePrimitive := pg.{Primitive}With{
 }.Make()
 ```
 
-This construct specifies the initial field values for a new primitive and "makes" (creates) the primitive.  The ```Make()``` method operates on the struct literal and returns a reference to an internal object representing the primitive.  The internal object provides field accessors, such as ```Content() string``` & ```SetContent(string content)``` to read and write fields.
+For example, to create a Command primitive:
+```Go
+someCmd := pg.CommandWith{
+	Label: "Press Me",
+	Embodiment: "outlined-button",
+	Status: 1
+}.Make()
+```
+
+This method of construction specifies the initial field values for a new primitive and "makes" (creates) the primitive.  The ```Make()``` method operates on the struct literal and returns a reference to an internal object representing the primitive.  The internal object provides field accessors, such as ```Label() string``` & ```SetLabel(string content) Command``` to read and write fields.
+
+An alternative approach is use New{Primitive} functions with inline field settings.  For example:
+```Go
+someCmd := pg.NewCommand("Press Me").SetEmbodiment("outlined-button").SetStatus(1)
+```
 
 Once all the primitives are created for the complete GUI, then a call is made to ```pgui.SetGUI()``` with a list of top-level primitives.  These primitives, along with their child primitives, and so on, represent a heirarchy of GUI items that will be rendered at the first call to ```pgui.Wait()```.
 
@@ -319,7 +333,7 @@ func main() {
 
 	// Build the GUI using primitives
 
-	normalTextEmbodiment := "{\"fontSize\":\"20.0\"}"
+	normalTextEmbodiment := "fontSize:20.0"
 
 	helloText := pg.TextWith{
 		Content:    "Hello, world!",
@@ -385,8 +399,8 @@ func main() {
 	// Build the GUI using primitives
 
 	// +++ ADD THIS LINE
-	boldTextEmbodiment := "{\"fontSize\":\"20.0\",\"fontWeight\":\"bold\"}"
-	normalTextEmbodiment := "{\"fontSize\":\"20.0\"}"
+	boldTextEmbodiment := "fontSize:20.0, fontWeight:bold"
+	normalTextEmbodiment := "fontSize: 20.0"
 
 	helloText := pg.TextWith{
 		Content:    "Hello, world!",
@@ -448,7 +462,7 @@ The basic structure for writing a GUI is:
 1.  Build the GUI using primitives, while keeping references to primitives you want to modify throughout operation of the GUI.
 1.  Construct a loop that waits for interactions in the GUI, updates the state of primitives based on new input, then goes back to waiting.
 
-GUIs are built using primitive objects, which work just like data structures.  These objects are created using a technique using struct literals, followed by a ```Make()``` function call, to initialize optional fields ahead of time.  Once created, these primitive objects have fields that you modify in your program to respond to user interactions and to reflect new state.
+GUIs are built using primitive objects, which work just like data structures.  These objects are created using a technique using struct literals, followed by a ```Make()``` function call, to initialize optional fields ahead of time.  Once created, these primitive objects have fields that you modify in your program to respond to user interactions and to reflect new state.  
 
 ## Where to Go Next
 
